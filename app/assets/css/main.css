@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+/* Brand tokens (Tailwind 4 reads the theme from CSS) */
+@theme {
+  --color-ivory: #FBF8F3;
+  --color-stone: #EFE9DF;
+  --color-ink: #1C1A19;
+  --color-mist: #6B6560;
+  --color-gold: #B8893B;
+  --color-gold-soft: #F1E3C6;
+  --color-rose: #C2677A;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: Inter, system-ui, sans-serif;
+  --shadow-soft: 0 8px 30px rgba(28, 26, 25, 0.06);
+  --radius-card: 12px;
+  --radius-input: 10px;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-ivory text-ink font-sans antialiased;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  h1, h2, h3 { @apply font-serif font-semibold text-ink; }
+  h1 { font-size: 2.25rem; line-height: 1.1; }
+  h2 { font-size: 1.75rem; line-height: 1.2; }
+  h3 { font-size: 1.25rem; line-height: 1.3; }
+  @media (min-width: 1024px) {
+    h1 { font-size: 3.5rem; }
+    h2 { font-size: 2.5rem; }
+    h3 { font-size: 1.5rem; }
+  }
+  /* Gold focus ring, 2px offset, on every interactive element */
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .container-x { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+  .section-y { @apply py-16 lg:py-24; }
+  .price { @apply font-sans font-semibold; font-variant-numeric: tabular-nums; }
+
+  /* Primary pill button with a gold underline that slides in on hover */
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center rounded-full bg-ink px-7 py-3 text-sm font-medium text-white
+           transition-colors duration-200 ease-out hover:bg-ink/90 disabled:cursor-not-allowed disabled:bg-mist disabled:opacity-80;
+  }
+  .btn-primary::after {
+    content: '';
+    @apply absolute bottom-2 left-7 right-7 h-px origin-left scale-x-0 bg-gold transition-transform duration-300 ease-out;
+  }
+  .btn-primary:hover:not(:disabled)::after { @apply scale-x-100; }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-full border border-stone px-6 py-2.5 text-sm font-medium text-ink
+           transition-colors duration-200 ease-out hover:border-gold;
+  }
+  .badge { @apply rounded-full px-3 py-1 text-xs font-medium; }
+}
